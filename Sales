@@ -1,0 +1,245 @@
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Farm Fresh - fresh, affordable and chemical-free local produce delivered to your home.">
+<title>Farm Fresh | Fresh Produce Delivered</title>
+<style>
+:root{
+  --green:#176b3a;--green2:#2f8b4b;--cream:#fffdf6;--light:#f2f7f0;
+  --dark:#173326;--gold:#e8ae35;--muted:#637268;--white:#fff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--light);color:var(--dark)}
+a{text-decoration:none;color:inherit}
+button{font:inherit;cursor:pointer}
+.topbar{background:var(--green);color:#fff;text-align:center;padding:9px;font-size:.9rem}
+nav{background:#fff;position:sticky;top:0;z-index:20;box-shadow:0 2px 15px #00000012}
+.nav-inner{max-width:1180px;margin:auto;padding:15px 22px;display:flex;align-items:center;justify-content:space-between;gap:25px}
+.logo{font-size:1.45rem;font-weight:900;color:var(--green)}
+.logo small{display:block;font-size:.68rem;color:var(--muted);font-weight:600;letter-spacing:.08em}
+.links{display:flex;gap:25px;font-weight:700}
+.links a:hover{color:var(--green2)}
+.cart-btn{border:0;background:var(--green);color:#fff;padding:11px 16px;border-radius:999px;font-weight:800}
+.hero{min-height:600px;display:flex;align-items:center;background:
+linear-gradient(90deg,rgba(9,43,24,.88),rgba(9,43,24,.45),rgba(9,43,24,.08)),
+url("https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=2000&q=88") center/cover}
+.hero-inner{max-width:1180px;width:100%;margin:auto;padding:80px 22px;color:#fff}
+.badge{display:inline-block;background:#ffffff20;border:1px solid #ffffff55;padding:8px 13px;border-radius:999px;margin-bottom:18px}
+.hero h1{font-size:clamp(2.7rem,7vw,5.5rem);line-height:.98;margin:0 0 20px;max-width:700px}
+.hero p{font-size:1.18rem;line-height:1.7;max-width:650px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{border:0;border-radius:11px;padding:14px 20px;font-weight:800}
+.primary{background:var(--gold);color:#1f2a20}.secondary{background:#fff;color:var(--green)}
+.section{max-width:1180px;margin:auto;padding:70px 22px}
+.section-head{text-align:center;margin-bottom:35px}
+.section-head h2{font-size:2.4rem;margin:0 0 8px}
+.section-head p{color:var(--muted);margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px}
+.card{background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 7px 25px #14371c12;border:1px solid #e4ebe2}
+.card img{width:100%;height:190px;object-fit:cover;display:block}
+.card-body{padding:20px}
+.tag{font-size:.75rem;color:var(--green2);font-weight:900;text-transform:uppercase;letter-spacing:.09em}
+.card h3{margin:7px 0;font-size:1.25rem}
+.price{font-size:1.25rem;font-weight:900;color:var(--green);margin:10px 0}
+.desc{font-size:.9rem;color:var(--muted);line-height:1.5;min-height:42px}
+.add{width:100%;background:var(--green);color:#fff;border:0;padding:12px;border-radius:10px;font-weight:800;margin-top:10px}
+.featured{outline:2px solid #d7e9c8}
+.features{background:var(--cream)}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.feature{padding:25px;background:#fff;border-radius:16px;text-align:center}
+.feature-icon{font-size:2rem}.feature h3{margin:10px 0 6px}.feature p{color:var(--muted);line-height:1.5}
+.order{background:#e5f1df}
+.order-box{max-width:850px;margin:auto;background:#fff;padding:30px;border-radius:20px;box-shadow:0 8px 30px #14371c12}
+form{display:grid;gap:13px}
+input,textarea{border:1px solid #ccd8cd;border-radius:10px;padding:13px;font:inherit;width:100%}
+textarea{min-height:100px;resize:vertical}
+footer{background:#103d25;color:#fff;padding:40px 22px;text-align:center}
+.footer-inner{max-width:1180px;margin:auto}
+footer p{color:#cfe0d4}
+.cart-panel{position:fixed;right:20px;top:82px;width:min(410px,calc(100% - 40px));background:#fff;z-index:50;border-radius:18px;padding:22px;box-shadow:0 15px 50px #0004;display:none}
+.cart-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:12px 0;border-bottom:1px solid #e5e9e5}
+.qty button{border:1px solid #ccd8cd;background:#fff;border-radius:5px;padding:3px 8px}
+.total{font-size:1.3rem;font-weight:900;margin:18px 0}
+.close{float:right;border:0;background:#eee;border-radius:50%;width:32px;height:32px}
+@media(max-width:720px){
+ .links{display:none}.hero{min-height:650px}.hero-inner{padding-top:60px}
+ .section{padding:55px 16px}.card img{height:210px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">🌱 Fresh from local growers • 🚛 Home delivery available • 💚 Every order makes a difference</div>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#">🌿 Farm Fresh <small>FRESH PRODUCE • HEALTHY LIVING • LOCAL SUPPORT</small></a>
+    <div class="links">
+      <a href="#shop">Shop</a><a href="#why">Why Farm Fresh</a><a href="#order">How to Order</a><a href="#contact">Contact</a>
+    </div>
+    <button class="cart-btn" onclick="toggleCart()">🛒 Cart <span id="cartCount">0</span></button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="badge">LOCAL • FRESH • AFFORDABLE</span>
+    <h1>Support local.<br>Eat fresh.<br>Save money! 💚</h1>
+    <p>Fresh, affordable and chemical-free produce delivered directly to homes — harvested, packed and delivered with love.</p>
+    <div class="cta">
+      <a class="btn primary" href="#shop">Shop fresh produce</a>
+      <a class="btn secondary" href="#order">How to order</a>
+    </div>
+  </div>
+</section>
+
+<section id="shop" class="section">
+  <div class="section-head">
+    <h2>🥬 Fresh Produce</h2>
+    <p>Choose individual items or save with our popular box deals.</p>
+  </div>
+  <div class="grid" id="products"></div>
+</section>
+
+<section id="why" class="section features">
+  <div class="section-head">
+    <h2>Why choose Farm Fresh?</h2>
+    <p>Good food, local support and convenient delivery.</p>
+  </div>
+  <div class="feature-grid">
+    <div class="feature"><div class="feature-icon">🌱</div><h3>Fresh & Natural</h3><p>Carefully selected produce with a focus on freshness and natural quality.</p></div>
+    <div class="feature"><div class="feature-icon">🚛</div><h3>Home Delivery</h3><p>We deliver directly to homes in our surrounding service area.</p></div>
+    <div class="feature"><div class="feature-icon">💚</div><h3>Support Local</h3><p>Your order helps keep local growers and producers connected with customers.</p></div>
+    <div class="feature"><div class="feature-icon">📦</div><h3>Custom Boxes</h3><p>Need a special combination? Ask us about a custom produce box.</p></div>
+  </div>
+</section>
+
+<section id="order" class="section order">
+  <div class="order-box">
+    <div class="section-head">
+      <h2>📦 How to order</h2>
+      <p>Add your items to the cart, then send your details. We'll confirm the delivery time.</p>
+    </div>
+    <form onsubmit="sendOrder(event)">
+      <input id="name" required placeholder="Full name">
+      <input id="phone" required placeholder="Phone / WhatsApp">
+      <input id="email" type="email" placeholder="Email address">
+      <input id="address" required placeholder="Delivery address / suburb">
+      <textarea id="notes" placeholder="Custom box, preferred delivery time or other notes"></textarea>
+      <button class="btn" style="background:var(--green);color:white" type="submit">Send Order Request</button>
+    </form>
+  </div>
+</section>
+
+<section id="contact" class="section">
+  <div class="section-head">
+    <h2>💬 Questions or custom box?</h2>
+    <p>Just ask! We're happy to help with your order.</p>
+  </div>
+  <div style="text-align:center">
+    <a class="btn primary" href="mailto:YOUR-EMAIL@example.com">✉️ Email Farm Fresh</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <h2>🌿 Farm Fresh</h2>
+    <p>Fresh produce • Local support • Better value</p>
+    <p>🚛 Serving surrounds</p>
+    <small>Prices shown are based on the June 2025 list provided. Confirm availability and current pricing when ordering.</small>
+  </div>
+</footer>
+
+<div class="cart-panel" id="cartPanel">
+  <button class="close" onclick="toggleCart()">×</button>
+  <h2>🛒 Your order</h2>
+  <div id="cartItems"></div>
+  <div class="total">Total: $<span id="total">0.00</span></div>
+  <a class="btn" style="display:block;text-align:center;background:var(--green);color:white" href="#order" onclick="toggleCart()">Continue to order</a>
+</div>
+
+<script>
+const products=[
+{name:"Fruit Box",cat:"Box Deals",price:32,img:"https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&w=900&q=85",desc:"A seasonal selection of fresh fruit."},
+{name:"Veg Box",cat:"Box Deals",price:38,img:"https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=85",desc:"Fresh seasonal vegetables for everyday meals."},
+{name:"Medium Mixed Box",cat:"Box Deals",price:50,img:"https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=900&q=85",desc:"A balanced mix of fruit and vegetables."},
+{name:"Large Mixed Box",cat:"Box Deals",price:70,img:"https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=85",desc:"A generous family-sized fresh produce box."},
+
+{name:"Chicken Eggs",cat:"Eggs",price:7,img:"https://images.unsplash.com/photo-1506976785307-8732e854ad03?auto=format&fit=crop&w=900&q=85",desc:"Fresh chicken eggs — $7."},
+{name:"Duck Eggs",cat:"Eggs",price:9,img:"https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?auto=format&fit=crop&w=900&q=85",desc:"Fresh duck eggs — $9/dozen."},
+{name:"Goose Eggs",cat:"Eggs",price:8,img:"https://images.unsplash.com/photo-1569288052389-dac9b01c9c4d?auto=format&fit=crop&w=900&q=85",desc:"Goose eggs — $8 for 4."},
+
+{name:"Onions",cat:"Veggies",price:3,img:"https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=900&q=85",desc:"$3/kg"},
+{name:"Carrots",cat:"Veggies",price:2.5,img:"https://images.unsplash.com/photo-1445282768818-728615cc910a?auto=format&fit=crop&w=900&q=85",desc:"$2.50/kg"},
+{name:"Tomatoes",cat:"Veggies",price:6,img:"https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=900&q=85",desc:"$6/kg"},
+{name:"Heirloom Tomatoes",cat:"Veggies",price:10,img:"https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=900&q=85",desc:"$10/kg"},
+
+{name:"Fresh Milk",cat:"Milk & More",price:3,img:"https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=900&q=85",desc:"Fresh milk — $3/L"},
+{name:"Marmalade",cat:"Milk & More",price:8,img:"https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?auto=format&fit=crop&w=900&q=85",desc:"Marmalade — $8/jar"},
+
+{name:"Marfona Potatoes — 25kg",cat:"Bulk Potatoes",price:18,img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=900&q=85",desc:"25kg bag — $18"},
+{name:"Marfona Potatoes — 12.5kg",cat:"Bulk Potatoes",price:14,img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=900&q=85",desc:"12.5kg bag — $14"},
+{name:"Maris Piper — 10kg",cat:"Bulk Potatoes",price:10,img:"https://images.unsplash.com/photo-1445282768818-728615cc910a?auto=format&fit=crop&w=900&q=85",desc:"10kg — $10"},
+{name:"Yellow Potatoes — 10kg",cat:"Bulk Potatoes",price:10,img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=900&q=85",desc:"10kg — $10"},
+{name:"Red Potatoes — 10kg",cat:"Bulk Potatoes",price:10,img:"https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=900&q=85",desc:"10kg — $10"},
+
+{name:"Pure Honey — 1kg",cat:"Honey",price:18,img:"https://images.unsplash.com/photo-1471943311424-646960669fbc?auto=format&fit=crop&w=900&q=85",desc:"Pure honey — $18/kg"},
+{name:"Wildflower Honey — 1kg",cat:"Honey",price:24,img:"https://images.unsplash.com/photo-1558642891-54be180ea339?auto=format&fit=crop&w=900&q=85",desc:"Wildflower honey — $24/kg"},
+{name:"Honeycomb in Honey — 1kg",cat:"Honey",price:25,img:"https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=900&q=85",desc:"Honeycomb in honey — $25/kg"}
+];
+
+const cart={};
+
+function renderProducts(){
+  document.getElementById("products").innerHTML=products.map((p,i)=>`
+  <article class="card ${i<4?'featured':''}">
+    <img src="${p.img}" alt="${p.name}" loading="lazy">
+    <div class="card-body">
+      <div class="tag">${p.cat}</div>
+      <h3>${p.name}</h3>
+      <div class="price">$${p.price.toFixed(2)}</div>
+      <div class="desc">${p.desc}</div>
+      <button class="add" onclick="addToCart(${i})">Add to order</button>
+    </div>
+  </article>`).join("");
+  updateCart();
+}
+function addToCart(i){cart[i]=(cart[i]||0)+1;updateCart();document.getElementById("cartPanel").style.display="block"}
+function changeQty(i,n){cart[i]+=n;if(cart[i]<=0)delete cart[i];updateCart()}
+function updateCart(){
+  let total=0,count=0;
+  const ids=Object.keys(cart);
+  document.getElementById("cartItems").innerHTML=ids.length?ids.map(i=>{
+    const p=products[i],sub=p.price*cart[i];total+=sub;count+=cart[i];
+    return `<div class="cart-row"><div><strong>${p.name}</strong><br><span class="qty">
+    <button onclick="changeQty(${i},-1)">−</button> ${cart[i]} <button onclick="changeQty(${i},1)">+</button>
+    </span></div><strong>$${sub.toFixed(2)}</strong></div>`;
+  }).join(""):"<p>Your cart is empty.</p>";
+  document.getElementById("total").textContent=total.toFixed(2);
+  document.getElementById("cartCount").textContent=count;
+}
+function toggleCart(){
+  const p=document.getElementById("cartPanel");
+  p.style.display=p.style.display==="block"?"none":"block";
+}
+function sendOrder(e){
+  e.preventDefault();
+  if(!Object.keys(cart).length){alert("Please add at least one product first.");return}
+  const items=Object.keys(cart).map(i=>products[i].name+" x "+cart[i]).join(", ");
+  const body=`Hello Farm Fresh,%0A%0AI would like to place an order.%0A%0AName: ${encodeURIComponent(document.getElementById("name").value)}%0APhone/WhatsApp: ${encodeURIComponent(document.getElementById("phone").value)}%0AEmail: ${encodeURIComponent(document.getElementById("email").value)}%0ADelivery address: ${encodeURIComponent(document.getElementById("address").value)}%0AItems: ${encodeURIComponent(items)}%0ATotal: $${document.getElementById("total").textContent}%0ANotes: ${encodeURIComponent(document.getElementById("notes").value)}`;
+  window.location.href="mailto:YOUR-EMAIL@example.com?subject=Farm Fresh Order&body="+body;
+}
+renderProducts();
+</script>
+</body>
+</html>'''
+
+path = Path("/mnt/data/farm_fresh_produce_store.html")
+path.write_text(html, encoding="utf-8")
+print(path)
+
